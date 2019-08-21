@@ -15,7 +15,8 @@ claims = {"iss": "joe",
 
 # Generate a JWT
 print("Generating JWT...")
-encoded_jwt = adafruit_jwt.JWT.generate(claims, secrets["private_key"], algo="RS256")
+encoded_jwt = adafruit_jwt.JWT.generate(
+    claims, secrets["private_key"], algo="RS256")
 print("Encoded JWT: ", encoded_jwt)
 
 # Validate a provided JWT
