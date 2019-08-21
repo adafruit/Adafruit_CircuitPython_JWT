@@ -17,7 +17,7 @@ JSON Web Token (JWT) Authentication module for CircuitPython. JSON Web Tokens ar
 `RFC 7519 <https://tools.ietf.org/html/rfc7519>`_ method for representing claims securely between two parties.
 
 This library currently supports the following signature algorithms for JWT generation and verification:
- * No encoding (`"none"`)
+ * No encoding ("none")
  * RS256/SHA-256 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
  * RS384/SHA-384 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
  * RS512/SHA-512 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
