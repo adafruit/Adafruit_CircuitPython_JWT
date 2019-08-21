@@ -46,7 +46,6 @@ from adafruit_rsa import PrivateKey, sign
 
 from adafruit_binascii import b2a_base64, a2b_base64
 
-import string
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_JWT.git"
@@ -111,8 +110,7 @@ class JWT:
         # Compute the signature
         if algo == "none":
             jwt = "{}.{}".format(jose_header, claims)
-        elif algo == "RS256" or algo == "RS384" or algo == "RS512" or algo == "RSA":
-            #sig = sign(payload, priv_key, "SHA-256")
+        elif algo in ("RS256", "RS384", "RS512"):
             signature = STRING_TOOLS.urlsafe_b64encode(
                 sign(payload, priv_key, "SHA-256"))
             jwt = payload + "." + signature
