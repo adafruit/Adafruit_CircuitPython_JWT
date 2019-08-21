@@ -39,6 +39,10 @@ Implementation Notes
 
 * Adafruit's RSA library:
   https://github.com/adafruit/Adafruit_CircuitPython_RSA
+
+* Adafruit's binascii library:
+  https://github.com/adafruit/Adafruit_CircuitPython_RSA
+
 """
 import io
 import json

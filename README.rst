@@ -14,8 +14,13 @@ Introduction
     :alt: Build Status
 
 JSON Web Token (JWT) Authentication module for CircuitPython. JSON Web Tokens are an open, industry standard
-`RFC 7519 <https://tools.ietf.org/html/rfc7519>`_ method for representing claims securely between two parties. Module
-includes methods for JWT generation and verification.
+`RFC 7519 <https://tools.ietf.org/html/rfc7519>`_ method for representing claims securely between two parties.
+
+This library currently supports the following signature algorithms:
+ * No encoding, "none"
+ * RS256/SHA-256 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
+ * RS384/SHA-384 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
+ * RS512/SHA-512 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
 
 
 Dependencies
@@ -23,6 +28,8 @@ Dependencies
 This driver depends on:
 
 * `Adafruit CircuitPython <https://github.com/adafruit/circuitpython>`_
+* `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_
+* `Adafruit_CircuitPython_binascii <https://github.com/adafruit/Adafruit_CircuitPython_binascii>`_
 
 Please ensure all dependencies are available on the CircuitPython filesystem.
 This is easily achieved by downloading
@@ -58,7 +65,9 @@ To install in a virtual environment in your current project:
 Usage Example
 =============
 
-.. todo:: Add a quick, simple example. It and other examples should live in the examples folder and be included in docs/examples.rst.
+.. code-block:: python
+
+
 
 Contributing
 ============
