@@ -16,12 +16,11 @@ Introduction
 JSON Web Token (JWT) Authentication module for CircuitPython. JSON Web Tokens are an open, industry standard
 `RFC 7519 <https://tools.ietf.org/html/rfc7519>`_ method for representing claims securely between two parties.
 
-This library currently supports the following signature algorithms:
- * No encoding, "none"
+This library currently supports the following signature algorithms for JWT generation and verification:
+ * No encoding (`"none"`)
  * RS256/SHA-256 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
  * RS384/SHA-384 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
  * RS512/SHA-512 (via `Adafruit_CircuitPython_RSA <https://github.com/adafruit/Adafruit_CircuitPython_RSA>`_)
-
 
 Dependencies
 =============
@@ -65,9 +64,38 @@ To install in a virtual environment in your current project:
 Usage Example
 =============
 
+Generating encoded JWT
+
 .. code-block:: python
 
+        import adafruit_jwt
+        # Import Private RSA key from a secrets.py file
+        try:
+            from secrets import secrets
+        except ImportError:
+            print("WiFi secrets are kept in secrets.py, please add them there!")
+            raise
 
+        # Create JWT Claims
+        claims = {"iss": "joe",
+                "exp": 1300819380,
+                "name": "John Doe",
+                "admin": True}
+
+        # Generate JWT, sign with RSA private key and RS-256
+        encoded_jwt = adafruit_jwt.JWT.generate(
+            claims, secrets["private_key"], algo="RS256")
+        print("Encoded JWT: ", encoded_jwt)
+
+
+Validating a generated JWT, encoded_jwt.
+
+.. code-block:: python
+
+        import adafruit_jwt
+        decoded_jwt = adafruit_jwt.JWT.validate(encoded_jwt)
+        # The decoded JWT's JOSE header and claims set are returned as a tuple
+        print('JOSE Header: {}\nJWT Claims: {}'.format(decoded_jwt[0], decoded_jwt[1]))
 
 Contributing
 ============
