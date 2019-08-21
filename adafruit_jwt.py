@@ -110,15 +110,22 @@ class JWT:
         # Compute the signature
         if algo == "none":
             jwt = "{}.{}".format(jose_header, claims)
-        elif algo in ("RS256", "RS384", "RS512"):
+            return jwt
+        if algo == "RS256":
             signature = STRING_TOOLS.urlsafe_b64encode(
                 sign(payload, priv_key, "SHA-256"))
-            jwt = payload + "." + signature
+        elif algo == "RS384":
+            signature = STRING_TOOLS.urlsafe_b64encode(
+                sign(payload, priv_key, "SHA-384"))
+        elif algo == "RS512":
+            signature = STRING_TOOLS.urlsafe_b64encode(
+                sign(payload, priv_key, "SHA-512"))
         else:
             raise TypeError(
                 "Adafruit_JWT is currently only compatible with algorithms within"
                 "the Adafruit_RSA module."
             )
+        jwt = payload + "." + signature
         return jwt
 
 

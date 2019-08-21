@@ -13,7 +13,9 @@ Introduction
     :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_JWT
     :alt: Build Status
 
-JSON Web Token Authentication 
+JSON Web Token (JWT) Authentication module for CircuitPython. JSON Web Tokens are an open, industry standard
+`RFC 7519 <https://tools.ietf.org/html/rfc7519>`_ method for representing claims securely between two parties. Module
+includes methods for JWT generation and verification.
 
 
 Dependencies
@@ -30,9 +32,6 @@ Installing from PyPI
 =====================
 .. note:: This library is not available on PyPI yet. Install documentation is included
    as a standard element. Stay tuned for PyPI availability!
-
-.. todo:: Remove the above note if PyPI version is/will be available at time of release.
-   If the library is not planned for PyPI, remove the entire 'Installing from PyPI' section.
 
 On supported GNU/Linux systems like the Raspberry Pi, you can install the driver locally `from
 PyPI <https://pypi.org/project/adafruit-circuitpython-jwt/>`_. To install for current user:
