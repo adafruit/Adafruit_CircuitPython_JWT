@@ -19,5 +19,6 @@ encoded_jwt = adafruit_jwt.JWT.generate(claims, secrets["private_key"], algo="RS
 print("Encoded JWT: ", encoded_jwt)
 
 # Validate a provided JWT
+print("Decoding JWT...")
 decoded_jwt = adafruit_jwt.JWT.validate(encoded_jwt)
-print('Decoded JWT:\nJOSE Header: {}\nJWT Claims: {}'.format(decoded_jwt[0], decoded_jwt[1]))
+print('JOSE Header: {}\nJWT Claims: {}'.format(decoded_jwt[0], decoded_jwt[1]))

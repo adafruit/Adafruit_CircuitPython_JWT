@@ -59,38 +59,35 @@ class JWT:
     :param str algo: Encryption algorithm used for claims. Can be None.
 
     """
-
     @staticmethod
     def validate(jwt):
-        """Validates a provided JWT. Does not support nested signing.
+        """Validates a provided JWT. Does not support validating
+        nested signing. Returns JOSE Header and claim set.
         :param str jwt: JSON Web Token.
         :returns: The message's decoded JOSE header and claims.
         :rtype: tuple
         """
         # Verify JWT contains at least one period ('.')
         if jwt.find(".") == -1:
-            raise ValueError("JWT must have at least one period")
-        # Separate the encoded JOSE Header
-        jose_header = jwt.split(".")[0]
-        # Decode JOSE Header
+            raise ValueError("ProvidedJWT must have at least one period")
+        # Attempt to decode JOSE header
         try:
-            jose_header = STRING_TOOLS.urlsafe_b64decode(jose_header)
+            jose_header = STRING_TOOLS.urlsafe_b64decode(jwt.split(".")[0])
         except UnicodeError:
-            raise UnicodeError("Invalid JOSE Header encoding.")
-        if "type" not in jose_header:
+            raise UnicodeError("Unable to decode JOSE header.")
+        # Check for typ and alg in decoded JOSE header
+        if "typ" not in jose_header:
             raise TypeError("JOSE Header does not contain required type key.")
         if "alg" not in jose_header:
-            raise TypeError("Jose Header does not contain required alg key.")
-        # Separate encoded claim set
-        claims = jwt.split(".")[1]
+            raise TypeError("Jose Header does not contain an alg key.")
+        # Attempt to decode claim set
         try:
-            claims = json.loads(STRING_TOOLS.urlsafe_b64decode(claims))
+            claims = json.loads(STRING_TOOLS.urlsafe_b64decode(jwt.split(".")[1]))
         except UnicodeError:
             raise UnicodeError("Invalid claims encoding.")
         if not hasattr(claims, "keys"):
             raise TypeError("Provided claims is not a JSON dict. object")
         return (jose_header, claims)
-
 
     @staticmethod
     def generate(claims, private_key_data=None, algo=None):
@@ -108,15 +105,16 @@ class JWT:
         # https://tools.ietf.org/html/rfc7519#section-5
         jose_header = {"typ": "JWT", "alg": algo}
         payload = "{}.{}".format(
-            string.b42_urlsafe_encode(json.dumps(jose_header).encode("utf-8")),
-            string.b42_urlsafe_encode(json.dumps(claims).encode("utf-8")),
+            STRING_TOOLS.urlsafe_b64encode(json.dumps(jose_header).encode("utf-8")),
+            STRING_TOOLS.urlsafe_b64encode(json.dumps(claims).encode("utf-8")),
         )
         # Compute the signature
         if algo == "none":
             jwt = "{}.{}".format(jose_header, claims)
         elif algo == "RS256" or algo == "RS384" or algo == "RS512" or algo == "RSA":
             #sig = sign(payload, priv_key, "SHA-256")
-            signature = string.b42_urlsafe_encode(sign(payload, priv_key, "SHA-256"))
+            signature = STRING_TOOLS.urlsafe_b64encode(
+                sign(payload, priv_key, "SHA-256"))
             jwt = payload + "." + signature
         else:
             raise TypeError(
@@ -149,7 +147,8 @@ class STRING_TOOLS:
         :param bytes payload: bytes-like object.
         """
         return STRING_TOOLS.translate(
-            b2a_base64(payload)[:-1].decode("utf-8"), {ord("+"): "-", ord("/"): "_"}
+            b2a_base64(payload)[
+                :-1].decode("utf-8"), {ord("+"): "-", ord("/"): "_"}
         )
 
     @staticmethod
@@ -168,7 +167,8 @@ class STRING_TOOLS:
             try:
                 return str_data.encode("ascii")
             except:
-                raise ValueError("string argument should contain only ASCII characters")
+                raise ValueError(
+                    "string argument should contain only ASCII characters")
         elif isinstance(str_data, bit_types):
             return str_data
         else:
