@@ -9,8 +9,8 @@ Introduction
     :target: https://discord.gg/nBQh6qu
     :alt: Discord
 
-.. image:: https://travis-ci.com/adafruit/Adafruit_CircuitPython_JWT.svg?branch=master
-    :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_JWT
+.. image:: https://github.com/adafruit/Adafruit_CircuitPython_JWT/workflows/Build%20CI/badge.svg
+    :target: https://github.com/adafruit/Adafruit_CircuitPython_JWT/actions/
     :alt: Build Status
 
 JSON Web Token (JWT) Authentication module for CircuitPython. JSON Web Tokens are an open, industry standard
