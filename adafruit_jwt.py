@@ -62,6 +62,7 @@ class JWT:
     :param str algo: Encryption algorithm used for claims. Can be None.
 
     """
+
     @staticmethod
     def validate(jwt):
         """Validates a provided JWT. Does not support validating
@@ -117,13 +118,16 @@ class JWT:
             return jwt
         if algo == "RS256":
             signature = STRING_TOOLS.urlsafe_b64encode(
-                sign(payload, priv_key, "SHA-256"))
+                sign(payload, priv_key, "SHA-256")
+            )
         elif algo == "RS384":
             signature = STRING_TOOLS.urlsafe_b64encode(
-                sign(payload, priv_key, "SHA-384"))
+                sign(payload, priv_key, "SHA-384")
+            )
         elif algo == "RS512":
             signature = STRING_TOOLS.urlsafe_b64encode(
-                sign(payload, priv_key, "SHA-512"))
+                sign(payload, priv_key, "SHA-512")
+            )
         else:
             raise TypeError(
                 "Adafruit_JWT is currently only compatible with algorithms within"
@@ -137,6 +141,7 @@ class JWT:
 class STRING_TOOLS:
     """Tools and helpers for URL-safe string encoding.
     """
+
     # Some strings for ctype-style character classification
     whitespace = " \t\n\r\v\f"
     ascii_lowercase = "abcdefghijklmnopqrstuvwxyz"
@@ -156,8 +161,7 @@ class STRING_TOOLS:
         :param bytes payload: bytes-like object.
         """
         return STRING_TOOLS.translate(
-            b2a_base64(payload)[
-                :-1].decode("utf-8"), {ord("+"): "-", ord("/"): "_"}
+            b2a_base64(payload)[:-1].decode("utf-8"), {ord("+"): "-", ord("/"): "_"}
         )
 
     @staticmethod
@@ -176,8 +180,7 @@ class STRING_TOOLS:
             try:
                 return str_data.encode("ascii")
             except:
-                raise ValueError(
-                    "string argument should contain only ASCII characters")
+                raise ValueError("string argument should contain only ASCII characters")
         elif isinstance(str_data, bit_types):
             return str_data
         else:
