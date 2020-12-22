@@ -111,7 +111,7 @@ class JWT:
         # https://tools.ietf.org/html/rfc7519#section-5
         jose_header = {"typ": "JWT", "alg": algo}
         if headers:
-            jose_headers.update(headers)
+            jose_header.update(headers)
         payload = "{}.{}".format(
             STRING_TOOLS.urlsafe_b64encode(json.dumps(jose_header).encode("utf-8")),
             STRING_TOOLS.urlsafe_b64encode(json.dumps(claims).encode("utf-8")),
