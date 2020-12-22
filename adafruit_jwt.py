@@ -94,10 +94,12 @@ class JWT:
         return (jose_header, claims)
 
     @staticmethod
-    def generate(claims, private_key_data=None, algo=None):
+    def generate(claims, private_key_data=None, algo=None, headers=None):
         """Generates and returns a new JSON Web Token.
         :param dict claims: JWT claims set
         :param str private_key_data: Decoded RSA private key data.
+        :param str algo: algorithm to be used. One of None, RS256, RS384 or RS512.
+        :param dict headers: additional headers for the claim.
         :rtype: str
         """
         # Allow for unencrypted JWTs
@@ -108,6 +110,8 @@ class JWT:
         # Create the JOSE Header
         # https://tools.ietf.org/html/rfc7519#section-5
         jose_header = {"typ": "JWT", "alg": algo}
+        if headers:
+            jose_headers.update(headers)
         payload = "{}.{}".format(
             STRING_TOOLS.urlsafe_b64encode(json.dumps(jose_header).encode("utf-8")),
             STRING_TOOLS.urlsafe_b64encode(json.dumps(claims).encode("utf-8")),
