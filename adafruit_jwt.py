@@ -143,8 +143,7 @@ class JWT:
 
 # pylint: disable=invalid-name
 class STRING_TOOLS:
-    """Tools and helpers for URL-safe string encoding.
-    """
+    """Tools and helpers for URL-safe string encoding."""
 
     # Some strings for ctype-style character classification
     whitespace = " \t\n\r\v\f"
@@ -184,7 +183,9 @@ class STRING_TOOLS:
             try:
                 return str_data.encode("ascii")
             except BaseException as error:
-                raise ValueError("string argument should contain only ASCII characters") from error
+                raise ValueError(
+                    "string argument should contain only ASCII characters"
+                ) from error
         elif isinstance(str_data, bit_types):
             return str_data
         else:
