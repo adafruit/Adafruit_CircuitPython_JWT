@@ -77,8 +77,8 @@ class JWT:
         # Attempt to decode JOSE header
         try:
             jose_header = STRING_TOOLS.urlsafe_b64decode(jwt.split(".")[0])
-        except UnicodeError:
-            raise UnicodeError("Unable to decode JOSE header.")
+        except UnicodeError as unicode_error:
+            raise unicode_error("Unable to decode JOSE header.")
         # Check for typ and alg in decoded JOSE header
         if "typ" not in jose_header:
             raise TypeError("JOSE Header does not contain required type key.")
@@ -87,8 +87,8 @@ class JWT:
         # Attempt to decode claim set
         try:
             claims = json.loads(STRING_TOOLS.urlsafe_b64decode(jwt.split(".")[1]))
-        except UnicodeError:
-            raise UnicodeError("Invalid claims encoding.")
+        except UnicodeError as unicode_error:
+            raise unicode_error("Invalid claims encoding.")
         if not hasattr(claims, "keys"):
             raise TypeError("Provided claims is not a JSON dict. object")
         return (jose_header, claims)
