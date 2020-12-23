@@ -78,7 +78,7 @@ class JWT:
         try:
             jose_header = STRING_TOOLS.urlsafe_b64decode(jwt.split(".")[0])
         except UnicodeError as unicode_error:
-            raise unicode_error("Unable to decode JOSE header.")
+            raise UnicodeError("Unable to decode JOSE header.") from unicode_error
         # Check for typ and alg in decoded JOSE header
         if "typ" not in jose_header:
             raise TypeError("JOSE Header does not contain required type key.")
@@ -88,7 +88,7 @@ class JWT:
         try:
             claims = json.loads(STRING_TOOLS.urlsafe_b64decode(jwt.split(".")[1]))
         except UnicodeError as unicode_error:
-            raise unicode_error("Invalid claims encoding.")
+            raise UnicodeError("Invalid claims encoding.") from unicode_error
         if not hasattr(claims, "keys"):
             raise TypeError("Provided claims is not a JSON dict. object")
         return (jose_header, claims)
@@ -183,8 +183,8 @@ class STRING_TOOLS:
         if isinstance(str_data, str):
             try:
                 return str_data.encode("ascii")
-            except:
-                raise ValueError("string argument should contain only ASCII characters")
+            except BaseException as error:
+                raise ValueError("string argument should contain only ASCII characters") from error
         elif isinstance(str_data, bit_types):
             return str_data
         else:
