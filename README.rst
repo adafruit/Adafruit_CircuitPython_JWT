@@ -94,6 +94,11 @@ Validating a generated JWT, encoded_jwt.
         # The decoded JWT's JOSE header and claims set are returned as a tuple
         print('JOSE Header: {}\nJWT Claims: {}'.format(decoded_jwt[0], decoded_jwt[1]))
 
+Documentation
+=============
+
+API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/jwt/en/latest/>`_.
+
 Contributing
 ============
 
