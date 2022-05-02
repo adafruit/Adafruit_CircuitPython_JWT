@@ -2,5 +2,5 @@
 #
 # SPDX-License-Identifier: Unlicense
 
-Adafruit-Blinka
+Adafruit-Blink
 adafruit-circuitpython-typing
