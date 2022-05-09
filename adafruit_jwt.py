@@ -27,6 +27,12 @@ Implementation Notes
   https://github.com/adafruit/Adafruit_CircuitPython_RSA
 
 """
+try:
+    from typing import Tuple, Union, Optional
+    from circuitpython_typing import ReadableBuffer
+except ImportError:
+    pass
+
 import io
 import json
 from adafruit_rsa import PrivateKey, sign
@@ -47,7 +53,7 @@ class JWT:
     """
 
     @staticmethod
-    def validate(jwt):
+    def validate(jwt: str) -> Tuple[str, dict]:
         """Validates a provided JWT. Does not support validating
         nested signing. Returns JOSE Header and claim set.
         :param str jwt: JSON Web Token.
@@ -77,7 +83,12 @@ class JWT:
         return (jose_header, claims)
 
     @staticmethod
-    def generate(claims, private_key_data=None, algo=None, headers=None):
+    def generate(
+        claims: dict,
+        private_key_data: Optional[str] = None,
+        algo: Optional[str] = None,
+        headers: Optional[dict] = None,
+    ) -> str:
         """Generates and returns a new JSON Web Token.
         :param dict claims: JWT claims set
         :param str private_key_data: Decoded RSA private key data.
@@ -140,7 +151,7 @@ class STRING_TOOLS:
     printable = digits + ascii_letters + punctuation + whitespace
 
     @staticmethod
-    def urlsafe_b64encode(payload):
+    def urlsafe_b64encode(payload: ReadableBuffer) -> str:
         """Encode bytes-like object using the URL- and filesystem-safe alphabet,
         which substitutes - instead of + and _ instead of / in
         the standard Base64 alphabet, and return the encoded bytes.
@@ -151,7 +162,7 @@ class STRING_TOOLS:
         )
 
     @staticmethod
-    def urlsafe_b64decode(payload):
+    def urlsafe_b64decode(payload: Union[ReadableBuffer, str]) -> str:
         """Decode bytes-like object or ASCII string using the URL
         and filesystem-safe alphabet
         :param bytes payload: bytes-like object or ASCII string
@@ -159,7 +170,7 @@ class STRING_TOOLS:
         return a2b_base64(STRING_TOOLS._bytes_from_decode_data(payload)).decode("utf-8")
 
     @staticmethod
-    def _bytes_from_decode_data(str_data):
+    def _bytes_from_decode_data(str_data: Union[ReadableBuffer, str]) -> bytes:
         # Types acceptable as binary data
         bit_types = (bytes, bytearray)
         if isinstance(str_data, str):
@@ -180,7 +191,7 @@ class STRING_TOOLS:
     # Port of CPython str.translate to Pure-Python by Johan Brichau, 2019
     # https://github.com/jbrichau/TrackingPrototype/blob/master/Device/lib/string.py
     @staticmethod
-    def translate(s, table):
+    def translate(s: str, table: dict) -> str:
         """Return a copy of the string in which each character
         has been mapped through the given translation table.
         :param string s: String to-be-character-table.
