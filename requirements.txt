@@ -4,3 +4,5 @@
 
 Adafruit-Blinka
 adafruit-circuitpython-typing
+adafruit-circuitpython-rsa
+adafruit-circuitpython-binascii
