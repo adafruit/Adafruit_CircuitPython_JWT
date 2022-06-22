@@ -4,7 +4,7 @@
 
 """
 `adafruit_jwt`
-================================================================================
+==============
 
 JSON Web Token Authentication
 
@@ -27,6 +27,7 @@ Implementation Notes
   https://github.com/adafruit/Adafruit_CircuitPython_RSA
 
 """
+
 try:
     from typing import Tuple, Union, Optional
     from circuitpython_typing import ReadableBuffer
@@ -36,7 +37,6 @@ except ImportError:
 import io
 import json
 from adafruit_rsa import PrivateKey, sign
-
 from adafruit_binascii import b2a_base64, a2b_base64
 
 
@@ -48,14 +48,15 @@ class JWT:
     """JSON Web Token helper for CircuitPython. Warning: JWTs are
     credentials, which can grant access to resources. Be careful
     where you paste them!
-    :param str algo: Encryption algorithm used for claims. Can be None.
 
+    :param str algo: Encryption algorithm used for claims. Can be None.
     """
 
     @staticmethod
     def validate(jwt: str) -> Tuple[str, dict]:
         """Validates a provided JWT. Does not support validating
         nested signing. Returns JOSE Header and claim set.
+
         :param str jwt: JSON Web Token.
         :returns: The message's decoded JOSE header and claims.
         :rtype: tuple
@@ -90,6 +91,7 @@ class JWT:
         headers: Optional[dict] = None,
     ) -> str:
         """Generates and returns a new JSON Web Token.
+
         :param dict claims: JWT claims set
         :param str private_key_data: Decoded RSA private key data.
         :param str algo: algorithm to be used. One of None, RS256, RS384 or RS512.
@@ -155,6 +157,7 @@ class STRING_TOOLS:
         """Encode bytes-like object using the URL- and filesystem-safe alphabet,
         which substitutes - instead of + and _ instead of / in
         the standard Base64 alphabet, and return the encoded bytes.
+
         :param bytes payload: bytes-like object.
         """
         return STRING_TOOLS.translate(
@@ -165,6 +168,7 @@ class STRING_TOOLS:
     def urlsafe_b64decode(payload: Union[ReadableBuffer, str]) -> str:
         """Decode bytes-like object or ASCII string using the URL
         and filesystem-safe alphabet
+
         :param bytes payload: bytes-like object or ASCII string
         """
         return a2b_base64(STRING_TOOLS._bytes_from_decode_data(payload)).decode("utf-8")
@@ -194,6 +198,7 @@ class STRING_TOOLS:
     def translate(s: str, table: dict) -> str:
         """Return a copy of the string in which each character
         has been mapped through the given translation table.
+
         :param string s: String to-be-character-table.
         :param dict table: Translation table.
         """
