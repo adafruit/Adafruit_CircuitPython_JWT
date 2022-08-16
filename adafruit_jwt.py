@@ -40,7 +40,7 @@ from adafruit_rsa import PrivateKey, sign
 from adafruit_binascii import b2a_base64, a2b_base64
 
 
-__version__ = "0.0.0-auto.0"
+__version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_JWT.git"
 
 # pylint: disable=no-member
