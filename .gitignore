@@ -45,3 +45,6 @@ _build
 .idea
 .vscode
 *~
+
+# Library-specific files
+*.pem
