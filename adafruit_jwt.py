@@ -86,14 +86,14 @@ class JWT:
     @staticmethod
     def generate(
         claims: dict,
-        private_key_data: Optional[str] = None,
+        private_key_data: Optional[Tuple[int, int, int, int, int]] = None,
         algo: Optional[str] = None,
         headers: Optional[dict] = None,
     ) -> str:
         """Generates and returns a new JSON Web Token.
 
         :param dict claims: JWT claims set
-        :param str private_key_data: Decoded RSA private key data.
+        :param tuple private_key_data: Decoded RSA private key data.
         :param str algo: algorithm to be used. One of None, RS256, RS384 or RS512.
         :param dict headers: additional headers for the claim.
         :rtype: str
