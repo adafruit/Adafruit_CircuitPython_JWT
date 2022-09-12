@@ -10,6 +10,10 @@ except ImportError:
     print("WiFi secrets are kept in secrets.py, please add them there!")
     raise
 
+# Run jwt_simpletest_secrets.py to generate the private key
+if "private_key" not in secrets:
+    raise KeyError("Run jwt_simpletest_secrets.py to generate the private key!")
+
 # Sample JWT Claims
 claims = {"iss": "joe", "exp": 1300819380, "name": "John Doe", "admin": True}
 
