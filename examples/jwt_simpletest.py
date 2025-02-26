@@ -1,17 +1,14 @@
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
 # SPDX-License-Identifier: MIT
 
+from os import getenv
 import adafruit_jwt
 
-# Get private RSA key from a secrets.py file
-try:
-    from secrets import secrets
-except ImportError:
-    print("WiFi secrets are kept in secrets.py, please add them there!")
-    raise
+# Get private RSA key from a settings.toml file
+private_key = getenv("private_key")
 
 # Run jwt_simpletest_secrets.py to generate the private key
-if "private_key" not in secrets:
+if not private_key:
     raise KeyError("Run jwt_simpletest_secrets.py to generate the private key!")
 
 # Sample JWT Claims
@@ -19,7 +16,7 @@ claims = {"iss": "joe", "exp": 1300819380, "name": "John Doe", "admin": True}
 
 # Generate a JWT
 print("Generating JWT...")
-encoded_jwt = adafruit_jwt.JWT.generate(claims, secrets["private_key"], algo="RS256")
+encoded_jwt = adafruit_jwt.JWT.generate(claims, private_key, algo="RS256")
 print("Encoded JWT: ", encoded_jwt)
 
 # Validate a provided JWT

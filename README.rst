@@ -69,13 +69,11 @@ Generating encoded JWT
 
 .. code-block:: python
 
+        from os import getenv
         import adafruit_jwt
-        # Import Private RSA key from a secrets.py file
-        try:
-            from secrets import secrets
-        except ImportError:
-            print("WiFi secrets are kept in secrets.py, please add them there!")
-            raise
+
+        # Import Private RSA key from a settings.toml file
+        private_key = getenv["private_key"]
 
         # Create JWT Claims
         claims = {"iss": "joe",
@@ -85,7 +83,7 @@ Generating encoded JWT
 
         # Generate JWT, sign with RSA private key and RS-256
         encoded_jwt = adafruit_jwt.JWT.generate(
-            claims, secrets["private_key"], algo="RS256")
+            claims, private_key, algo="RS256")
         print("Encoded JWT: ", encoded_jwt)
 
 
