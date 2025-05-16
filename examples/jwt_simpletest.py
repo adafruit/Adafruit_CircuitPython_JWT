@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 from os import getenv
+
 import adafruit_jwt
 
 # Get private RSA key from a settings.toml file
@@ -22,4 +23,4 @@ print("Encoded JWT: ", encoded_jwt)
 # Validate a provided JWT
 print("Decoding JWT...")
 decoded_jwt = adafruit_jwt.JWT.validate(encoded_jwt)
-print("JOSE Header: {}\nJWT Claims: {}".format(decoded_jwt[0], decoded_jwt[1]))
+print(f"JOSE Header: {decoded_jwt[0]}\nJWT Claims: {decoded_jwt[1]}")
