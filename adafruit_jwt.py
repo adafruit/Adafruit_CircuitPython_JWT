@@ -29,22 +29,22 @@ Implementation Notes
 """
 
 try:
-    from typing import Tuple, Union, Optional
+    from typing import Optional, Tuple, Union
+
     from circuitpython_typing import ReadableBuffer
 except ImportError:
     pass
 
 import io
 import json
-from adafruit_rsa import PrivateKey, sign
-from adafruit_binascii import b2a_base64, a2b_base64
 
+from adafruit_binascii import a2b_base64, b2a_base64
+from adafruit_rsa import PrivateKey, sign
 
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_JWT.git"
 
 
-# pylint: disable=no-member
 class JWT:
     """JSON Web Token helper for CircuitPython. Warning: JWTs are
     credentials, which can grant access to resources. Be careful
@@ -115,20 +115,14 @@ class JWT:
         )
         # Compute the signature
         if algo == "none":
-            jwt = "{}.{}".format(jose_header, claims)
+            jwt = f"{jose_header}.{claims}"
             return jwt
         if algo == "RS256":
-            signature = STRING_TOOLS.urlsafe_b64encode(
-                sign(payload, priv_key, "SHA-256")
-            )
+            signature = STRING_TOOLS.urlsafe_b64encode(sign(payload, priv_key, "SHA-256"))
         elif algo == "RS384":
-            signature = STRING_TOOLS.urlsafe_b64encode(
-                sign(payload, priv_key, "SHA-384")
-            )
+            signature = STRING_TOOLS.urlsafe_b64encode(sign(payload, priv_key, "SHA-384"))
         elif algo == "RS512":
-            signature = STRING_TOOLS.urlsafe_b64encode(
-                sign(payload, priv_key, "SHA-512")
-            )
+            signature = STRING_TOOLS.urlsafe_b64encode(sign(payload, priv_key, "SHA-512"))
         else:
             raise TypeError(
                 "Adafruit_JWT is currently only compatible with algorithms within"
@@ -138,7 +132,6 @@ class JWT:
         return jwt
 
 
-# pylint: disable=invalid-name
 class STRING_TOOLS:
     """Tools and helpers for URL-safe string encoding."""
 
@@ -182,15 +175,12 @@ class STRING_TOOLS:
             try:
                 return str_data.encode("ascii")
             except BaseException as error:
-                raise ValueError(
-                    "string argument should contain only ASCII characters"
-                ) from error
+                raise ValueError("string argument should contain only ASCII characters") from error
         elif isinstance(str_data, bit_types):
             return str_data
         else:
             raise TypeError(
-                "argument should be bytes or ASCII string, not %s"
-                % str_data.__class__.__name__
+                "argument should be bytes or ASCII string, not %s" % str_data.__class__.__name__
             )
 
     # Port of CPython str.translate to Pure-Python by Johan Brichau, 2019
