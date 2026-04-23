@@ -67,7 +67,7 @@ class JWT:
             raise ValueError("ProvidedJWT must have at least one period")
         # Attempt to decode JOSE header
         try:
-            jose_header = STRING_TOOLS.urlsafe_b64decode(jwt.split(".")[0])
+            jose_header = STRING_TOOLS.urlsafe_b64decode(jwt.split(".", maxsplit=1)[0])
         except UnicodeError as unicode_error:
             raise UnicodeError("Unable to decode JOSE header.") from unicode_error
         # Check for typ and alg in decoded JOSE header
@@ -180,7 +180,7 @@ class STRING_TOOLS:
             return str_data
         else:
             raise TypeError(
-                "argument should be bytes or ASCII string, not %s" % str_data.__class__.__name__
+                f"argument should be bytes or ASCII string, not {str_data.__class__.__name__}"
             )
 
     # Port of CPython str.translate to Pure-Python by Johan Brichau, 2019
